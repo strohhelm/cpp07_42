@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Array.hpp                                          :+:      :+:    :+:   */
+/*   stuff.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pstrohal <pstrohal@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 12:41:52 by pstrohal          #+#    #+#             */
-/*   Updated: 2025/02/03 13:34:14 by pstrohal         ###   ########.fr       */
+/*   Created: 2025/01/16 11:39:22 by pstrohal          #+#    #+#             */
+/*   Updated: 2025/02/03 11:31:28 by pstrohal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,15 @@
 #define W	"\033[37m"
 #endif
 
-#ifndef ARRAY_HPP
-#define ARRAY_HPP
+#ifndef MAIN_HPP
+#define MAIN_HPP
 
 #include <string>
-#include <new>
 #include <iostream>
-#include <cstdlib>
-#include <stdexcept>
 
-#include "../../ex01/inc/stuff.hpp"
-template<typename Type> class Array
-{
-	public:
-		Array();
-		Array(const unsigned int n);
+template<typename Type, typename Function> void iter(Type *arr, size_t arrlen, Function func);
+template<typename Type> void print(Type arg1);
 
-		Array(const Array<Type>& src);
-		~Array();
-		Array<Type>& operator=(const Array<Type>& src);
-		Type& operator[](const size_t index) const;
-		size_t size(void) const;
-
-	private:
-		Type *_array;
-		size_t _size;
-};
-
-#include "../src/Array.tpp"
-
-
+#include "../src/stuff.tpp"
 
 #endif

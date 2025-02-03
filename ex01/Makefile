@@ -26,15 +26,15 @@ vpath %.hpp $(INC_DIR)
 vpath %.d $(DEP_DIR)
 
 
-FILES =	main.cpp
-# FILES =	main_subject.cpp
+FILES =	main.cpp\
+
 
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ =	$(addprefix $(OBJ_DIR)/, $(FILES:%.cpp=%.o))
 
 DEP:= $(OBJ:.o=.d)
 DEPFLAGS = -MMD -MP
-FLAGS = -Wall -Wextra -Werror -std=c++17 -g
+FLAGS = -Wall -Wextra -Werror -std=c++17
 INCLUDES = -I$(INC_DIR)
 
 all: $(NAME)
@@ -42,7 +42,7 @@ all: $(NAME)
 
 
 $(NAME):$(OBJ)
-	@$(CC) $^ -o $@ -g
+	@$(CC) $^ -o $@
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)

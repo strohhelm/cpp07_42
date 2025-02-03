@@ -6,7 +6,7 @@
 /*   By: pstrohal <pstrohal@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 12:41:50 by pstrohal          #+#    #+#             */
-/*   Updated: 2025/01/16 16:26:49 by pstrohal         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:38:22 by pstrohal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,16 @@ Array<Type>::Array()
 }
 
 template<typename Type>
+Array<Type>::~Array()
+{
+	if (_size > 0)
+		delete[] _array;
+};
+
+template<typename Type>
 Array<Type>::Array(const unsigned int n)
 {
-	_array = new(std::nothrow) Type[n];
+	_array = new(std::nothrow) Type[n]();
 	if (_array)
 		_size = n;
 	else
@@ -29,35 +36,42 @@ Array<Type>::Array(const unsigned int n)
 template<typename Type>
 Array<Type>::Array(const Array<Type>& src)
 {
-	if (!*this == src)
-	{
+	
 		_size = src.size();
-		_array = new(std::nothrow) Type[_size];
+		_array = new(std::nothrow) Type[_size]();
 		if (_array)
-			*_array = *src._array;
+		{
+			for (size_t i =0; i < _size; i++)
+				this->_array[i] = src[i];
+		}
 		else
 			_size = 0;
-	}
 }
 
 template<typename Type>
 Array<Type>& Array<Type>::operator=(const Array<Type>& src)
 {
-	if (!*this == src)
+	if (this != &src)
 	{
-		delete _array;
+		if (this->_size)
+			delete[] _array;
 		_size = src.size();
 		_array = new(std::nothrow) Type[_size];
 		if (_array)
-			*_array = *src._array;
+		{
+			for (size_t i =0; i < _size; i++)
+				this->_array[i] = src[i];
+		}
+			
 		else _size = 0;
 	}
+	return *this;
 }
 
 template<typename Type>
-Type& Array<Type>::operator[](const size_t index)
+Type& Array<Type>::operator[](const size_t index) const
 {
-	if (index > _size - 1)
+	if (index >= _size)
 		throw std::out_of_range("Index out of bounds!");
 	return _array[index];
 }
